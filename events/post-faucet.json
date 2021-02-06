@@ -1,0 +1,4 @@
+{
+  "httpMethod": "POST",
+  "body": "{\"tweet\": \"https://twitter.com/RHLSTHRM/status/1286310936274522114\",\"assetId\": \"0x38cF23C52Bb4B13F051Aec09580a2dE845a7FA35\",\"recipient\": \"indra8Ugyuni1ZJ6hSMUFXFDTLtkmJcZ6jmu9CFrkWAJyVaepCYoW8x\"}"
+}

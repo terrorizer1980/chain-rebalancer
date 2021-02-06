@@ -1,0 +1,8 @@
+POST https://nir7je4y8a.execute-api.us-east-1.amazonaws.com/Prod/faucet
+Content-Type: application/json;
+
+{
+  "tweet": "https://mobile.twitter.com/LayneHaber/status/1286712699565387777",
+  "assetId": "0x50C94BeCAd95bEe21aF226dc799365Ee6B134459",
+  "recipient": "indra52aaYwVMD55hsDnb6Mv45ukHT4dimJeH4deMr4zd8d161Cj3wB"
+}
