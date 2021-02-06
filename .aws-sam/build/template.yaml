@@ -1,0 +1,53 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: matic-rebalancer
+Transform:
+- AWS::Serverless-2016-10-31
+Resources:
+  getHelloFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: built/handlers/get-hello.getHelloHandler
+      Runtime: nodejs12.x
+      MemorySize: 128
+      Timeout: 100
+      Description: Prints a greeting message.
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: GET
+      CodeUri: getHelloFunction
+  postFaucetFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: built/handlers/post-faucet.postFaucetHandler
+      Runtime: nodejs12.x
+      MemorySize: 128
+      Timeout: 100
+      Description: Request tokens from hosted Connext client.
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: Users
+      Environment:
+        Variables:
+          TWITTER_CONSUMER_API_KEY: hddjRRpzzVplLPiZj2l4AsmRj
+          TWITTER_CONSUMER_API_SECRET: KrHHZ2hUNKPVj8mkFE28Q78QG4nXHhPJEDuhauK9f9tqm6JMPb
+          CONNEXT_CLIENT_URL: http://18.223.112.148:5040
+          TOKEN_ADDRESS: '0x50C94BeCAd95bEe21aF226dc799365Ee6B134459'
+          DYNAMO_TABLE:
+            Ref: Users
+          NODE_ENV: production
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /faucet
+            Method: POST
+      CodeUri: postFaucetFunction
+Outputs:
+  WebEndpoint:
+    Description: API Gateway endpoint URL for Prod stage
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/
