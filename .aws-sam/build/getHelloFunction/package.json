@@ -4,6 +4,9 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "@connext/vector-types": "^0.1.15-beta.4",
+    "@connext/vector-utils": "^0.1.15-beta.4",
+    "@maticnetwork/maticjs": "^2.0.29",
     "aws-sdk": "^2.838.0",
     "axios": "^0.21.1",
     "ethers": "5.0.29"
@@ -21,6 +24,7 @@
     "build:sam": "npm run compile && sam build",
     "deploy": "npm run build:sam && sam deploy",
     "local:api": "npm run build:sam && sam local start-api",
-    "local:hello": "npm run build:sam && AWS_SAM_LOCAL=true sam local invoke \"getHelloFunction\" -e \"./events/get-hello.json\""
+    "local:hello": "npm run build:sam && AWS_SAM_LOCAL=true sam local invoke \"getHelloFunction\" -e \"./events/get-hello.json\"",
+    "local:rebalance": "npm run build:sam && AWS_SAM_LOCAL=true sam local invoke \"rebalanceFunction\" -e \"./events/rebalance.json\""
   }
 }

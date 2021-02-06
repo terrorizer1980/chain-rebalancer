@@ -33,7 +33,7 @@ Resources:
             Path: /hello
             Method: GET
 
-  postFaucetFunction:
+  rebalanceFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: built/handlers/post-faucet.postFaucetHandler
@@ -48,11 +48,8 @@ Resources:
       Environment:
         Variables:
           # Make table name accessible as environment variable from function code during execution
-          TWITTER_CONSUMER_API_KEY: hddjRRpzzVplLPiZj2l4AsmRj
-          TWITTER_CONSUMER_API_SECRET: KrHHZ2hUNKPVj8mkFE28Q78QG4nXHhPJEDuhauK9f9tqm6JMPb
-          CONNEXT_CLIENT_URL: "http://18.223.112.148:5040"
-          TOKEN_ADDRESS: "0x50C94BeCAd95bEe21aF226dc799365Ee6B134459"
-          DYNAMO_TABLE: !Ref Users
+          CHAIN_PROVIDERS: '{"1": "https://mainnet.infura.io","137": "https://rpc-mainnet.maticvigil.com/v1/99f24efc276c3c0de5e2d6d6ee9608d370c88237"}'
+          ROUTER_KEY: "0x254bcf90272366f55e1ebae4a27c6af8d2cc4768ee66e87ec822abbd6e3936dd"
           NODE_ENV: production
       Events:
         Api:

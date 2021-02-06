@@ -4,6 +4,8 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "@connext/vector-types": "^0.1.15-beta.4",
+    "@connext/vector-utils": "^0.1.15-beta.4",
     "@maticnetwork/maticjs": "^2.0.29",
     "aws-sdk": "^2.838.0",
     "axios": "^0.21.1",

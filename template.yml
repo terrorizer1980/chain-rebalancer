@@ -36,7 +36,7 @@ Resources:
   rebalanceFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: built/handlers/post-faucet.postFaucetHandler
+      Handler: built/handlers/rebalance.rebalanceHandler
       Runtime: nodejs12.x
       MemorySize: 128
       Timeout: 100
@@ -49,6 +49,7 @@ Resources:
         Variables:
           # Make table name accessible as environment variable from function code during execution
           CHAIN_PROVIDERS: '{"1": "https://mainnet.infura.io","137": "https://rpc-mainnet.maticvigil.com/v1/"}'
+          ROUTER_KEY: ""
           NODE_ENV: production
       Events:
         Api:
