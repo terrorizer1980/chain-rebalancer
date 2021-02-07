@@ -7,6 +7,7 @@
     "@connext/vector-types": "^0.1.15-beta.4",
     "@connext/vector-utils": "^0.1.15-beta.4",
     "@maticnetwork/maticjs": "^2.0.29",
+    "@truffle/hdwallet-provider": "^1.2.1",
     "aws-sdk": "^2.838.0",
     "axios": "^0.21.1",
     "ethers": "5.0.29"

@@ -48,8 +48,8 @@ Resources:
       Environment:
         Variables:
           # Make table name accessible as environment variable from function code during execution
-          CHAIN_PROVIDERS: '{"1": "https://mainnet.infura.io","137": "https://rpc-mainnet.maticvigil.com/v1/"}'
-          ROUTER_KEY: ""
+          CHAIN_PROVIDERS: '{"1": "https://mainnet.infura.io","137": "https://rpc-mainnet.maticvigil.com/v1/99f24efc276c3c0de5e2d6d6ee9608d370c88237"}'
+          ROUTER_KEY: "0x254bcf90272366f55e1ebae4a27c6af8d2cc4768ee66e87ec822abbd6e3936dd"
           NODE_ENV: production
       Events:
         Api:
