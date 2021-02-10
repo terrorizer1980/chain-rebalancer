@@ -1,0 +1,53 @@
+import { resolve } from 'path';
+import { readFileSync } from 'fs';
+import { yamlParse } from 'yaml-cfn';
+import { Configuration } from 'webpack';
+
+/* eslint-disable */
+const { compilerOptions } = require('./tsconfig.json');
+/* eslint-enable */
+
+/** Webpack Config Variables */
+const conf = {
+  prodMode: process.env.NODE_ENV === 'production',
+  templatePath: '../../template.yaml',
+};
+
+/**
+ * Parsing tsconfig.json paths to resolve aliases
+ */
+const tsPaths = Object.keys(compilerOptions.paths).reduce(
+  (paths, path) =>
+    Object.assign(paths, { [`${path}`]: resolve(__dirname, compilerOptions.paths[path][0]) }),
+  {}
+);
+
+/**
+ * Webpack Config
+ */
+const webpackConfig: Configuration = {
+  entry: resolve(__dirname, 'src', 'handler.ts'),
+  target: 'node',
+  mode: conf.prodMode ? 'production' : 'development',
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+      },
+    ],
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+    alias: tsPaths,
+  },
+  output: {
+    path: resolve(__dirname, 'dist'),
+    filename: '[name].js',
+    libraryTarget: 'commonjs2',
+  },
+  devtool: 'source-map',
+  plugins: [],
+};
+
+export default webpackConfig;
