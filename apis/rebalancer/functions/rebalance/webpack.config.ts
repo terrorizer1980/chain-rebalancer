@@ -38,7 +38,7 @@ const webpackConfig: Configuration = {
     ],
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.tsx', '.ts', '.js', '.json'],
     alias: tsPaths,
   },
   output: {

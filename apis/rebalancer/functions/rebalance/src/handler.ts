@@ -1,4 +1,5 @@
-import { TAddress, TIntegerString } from '@connext/vector-types';
+import { TAddress, TIntegerString, TPublicIdentifier } from '@connext/vector-types';
+import { getSignerAddressFromPublicIdentifier } from '@connext/vector-utils';
 import { MaticPOSClient } from '@maticnetwork/maticjs';
 import { Static, Type } from '@sinclair/typebox';
 import Ajv from 'ajv';
@@ -11,7 +12,7 @@ export const RebalanceParamsSchema = Type.Object({
   amount: TIntegerString,
   assetId: TAddress,
   direction: Type.String(),
-  routerAddress: TAddress,
+  routerAddress: TPublicIdentifier,
 });
 export type RebalanceParams = Static<typeof RebalanceParamsSchema>;
 
@@ -44,7 +45,12 @@ export default async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResul
 
   try {
     if (params.direction === 'deposit') {
-      await depositToMatic(maticPOSClient, params.assetId, params.amount, params.routerAddress);
+      await depositToMatic(
+        maticPOSClient,
+        params.assetId,
+        params.amount,
+        getSignerAddressFromPublicIdentifier(params.routerAddress)
+      );
     }
   } catch (e) {
     return response.error(500, {}, e);
