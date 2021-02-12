@@ -4,7 +4,7 @@ import { MaticPOSClient } from '@maticnetwork/maticjs';
 import { Static, Type } from '@sinclair/typebox';
 import Ajv from 'ajv';
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { approveForDepositToMatic, checkDepositStatus, depositToMatic } from './rebalance';
+import { approveForDeposit, checkDepositStatus, deposit } from './rebalance';
 
 import response from '/opt/nodejs/defaultResponses';
 
@@ -54,35 +54,35 @@ export default async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResul
   try {
     if (params.direction === 'deposit') {
       if (params.type === 'approve') {
-        const approveTx = await approveForDepositToMatic(
+        const transaction = await approveForDeposit(
           maticPOSClient,
           params.assetId,
           params.amount,
           params.signer
         );
-        return response.success(200, {}, { transaction: approveTx });
+        return response.success(200, {}, { transaction });
       }
 
       if (params.type === 'status') {
         if (!params.txHash) {
           return response.error(400, {}, new Error('txHash is required to check status'));
         }
-        const approveTx = await checkDepositStatus(
+        const status = await checkDepositStatus(
           process.env.PARENT_PROVIDER,
           process.env.MATIC_PROVIDER,
           params.txHash
         );
-        return response.success(200, {}, { transaction: approveTx });
+        return response.success(200, {}, { status });
       }
 
       if (params.type === 'rebalance') {
-        const depositTx = await depositToMatic(
+        const transaction = await deposit(
           maticPOSClient,
           params.assetId,
           params.amount,
           params.signer
         );
-        return response.success(200, {}, { transaction: depositTx });
+        return response.success(200, {}, { transaction });
       }
       return response.error(400, {}, new Error('Unknown type argument'));
     }

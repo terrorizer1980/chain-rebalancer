@@ -79,5 +79,9 @@ export const checkDepositStatus = async (
   console.log('childCounter: ', childCounter);
   let rootCounter = BigNumber.from(tx.logs[3].topics[1]);
   console.log('rootCounter: ', rootCounter);
-  return BigNumber.from(childCounter).gte(rootCounter);
+  return {
+    completed: BigNumber.from(childCounter).gte(rootCounter),
+    childCounter: BigNumber.from(childCounter).toString(),
+    rootCounter: rootCounter.toString(),
+  };
 };
