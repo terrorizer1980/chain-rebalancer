@@ -23,14 +23,16 @@ export default async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResul
   const params: RebalanceParams = {
     amount: body.amount,
     assetId: body.assetId,
-    direction: body.direction,
+    direction: event.pathParameters.direction as any,
     signer: body.signer,
     type: body.type,
     txHash: body.txHash,
   };
   const ajv = new Ajv({ strict: false });
   const validate = ajv.compile(RebalanceParamsSchema);
+  console.log('params: ', params);
   const valid = validate(params);
+  console.log('valid: ', valid);
 
   if (!valid) {
     return response.error(500, {}, new Error(validate.errors?.map((err) => err.message).join(',')));

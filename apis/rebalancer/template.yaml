@@ -57,11 +57,11 @@ Resources:
       Runtime: nodejs12.x
       Environment:
         Variables:
-          PARENT_PROVIDER: https://goerli.infura.io/v3/d1caeba320f94122ba8f791f50122c4c
+          PARENT_PROVIDER: https://goerli.infura.io/v3/
           MATIC_PROVIDER: https://rpc-mumbai.matic.today
       Events:
         Hello:
           Type: Api
           Properties:
-            Path: /matic
+            Path: /matic/{direction}
             Method: post
