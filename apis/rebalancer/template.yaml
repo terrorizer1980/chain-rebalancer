@@ -57,10 +57,10 @@ Resources:
       Runtime: nodejs12.x
       Environment:
         Variables:
-          PARENT_PROVIDER: https://goerli.infura.io/v3/d1caeba320f94122ba8f791f50122c4c
-          PARENT_CHAIN_ID: 5
-          MATIC_PROVIDER: https://rpc-mumbai.matic.today
-          MATIC_CHAIN_ID: 80001
+          PARENT_PROVIDER: https://mainnet.infura.io/v3/
+          PARENT_CHAIN_ID: 1
+          MATIC_PROVIDER: https://rpc-mainnet.maticvigil.com
+          MATIC_CHAIN_ID: 137
       Events:
         Hello:
           Type: Api

@@ -10,6 +10,6 @@ Go into each directory in `layers` and `functions`, do the following:
 From `apis/rebalancer` run:
 
 - `sam build`
-- `sam local invoke "RebalanceFunction" -e functions/rebalance/src/__tests__/events/event.json` for example
+- `sam local invoke "MaticFunction" -e functions/rebalance/src/__tests__/events/deposit-approve.json` for example
   or
 - `sam local start-api`
