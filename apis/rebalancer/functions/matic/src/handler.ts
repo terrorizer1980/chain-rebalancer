@@ -14,6 +14,10 @@ export const RebalanceParamsSchema = Type.Object({
   signer: TAddress,
   type: Type.Union([Type.Literal('approve'), Type.Literal('rebalance'), Type.Literal('status')]),
   txHash: Type.Optional(TBytes32),
+  parentProvider: Type.String({ format: 'uri' }),
+  childProvider: Type.String({ format: 'uri' }),
+  parentChainId: Type.Number(),
+  childChainId: Type.Number(),
 });
 export type RebalanceParams = Static<typeof RebalanceParamsSchema>;
 
@@ -27,6 +31,10 @@ export default async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResul
     signer: body.signer,
     type: body.type,
     txHash: body.txHash,
+    parentProvider: process.env.PARENT_PROVIDER,
+    childProvider: process.env.MATIC_PROVIDER,
+    parentChainId: parseInt(process.env.PARENT_CHAIN_ID),
+    childChainId: parseInt(process.env.MATIC_CHAIN_ID),
   };
   const ajv = new Ajv({ strict: false });
   const validate = ajv.compile(RebalanceParamsSchema);
@@ -42,26 +50,24 @@ export default async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResul
   const version = !!process.env.MAINNET ? 'v1' : 'mumbai';
   console.log('network: ', network);
   console.log('version: ', version);
-  console.log('process.env.PARENT_PROVIDER: ', process.env.PARENT_PROVIDER);
-  console.log('process.env.MATIC_PROVIDER: ', process.env.MATIC_PROVIDER);
 
   const maticPOSClient = new MaticPOSClient({
     network,
     version,
-    parentProvider: process.env.PARENT_PROVIDER,
-    maticProvider: process.env.MATIC_PROVIDER,
+    parentProvider: params.parentProvider,
+    maticProvider: params.childProvider,
   });
 
   try {
     if (params.direction === 'deposit') {
       if (params.type === 'approve') {
-        const transaction = await approveForDeposit(
+        const { transaction, allowance } = await approveForDeposit(
           maticPOSClient,
           params.assetId,
           params.amount,
           params.signer
         );
-        return response.success(200, {}, { transaction });
+        return response.success(200, {}, { transaction, allowance });
       }
 
       if (params.type === 'status') {
@@ -69,15 +75,17 @@ export default async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResul
           return response.error(400, {}, new Error('txHash is required to check status'));
         }
         const status = await checkDepositStatus(
-          process.env.PARENT_PROVIDER,
-          process.env.MATIC_PROVIDER,
+          params.parentProvider,
+          params.childProvider,
+          params.parentChainId,
+          params.childChainId,
           params.txHash
         );
         return response.success(200, {}, { status });
       }
 
       if (params.type === 'rebalance') {
-        const transaction = await deposit(
+        const { transaction } = await deposit(
           maticPOSClient,
           params.assetId,
           params.amount,

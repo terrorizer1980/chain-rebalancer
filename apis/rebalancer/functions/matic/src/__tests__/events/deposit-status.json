@@ -1,0 +1,7 @@
+{
+  "path": "/deposit",
+  "pathParameters": {
+    "direction": "deposit"
+  },
+  "body": "{\"amount\": \"100\",\"assetId\": \"0x655F2166b0709cd575202630952D71E2bB0d61Af\",\"direction\": \"deposit\",\"signer\": \"0x5A9e792143bf2708b4765C144451dCa54f559a19\", \"type\": \"status\", \"txHash\": \"0xbfaef1c6272ef81095ae906e99c47cdfb681608e455706935f40eb679eeb8a36\"}"
+}

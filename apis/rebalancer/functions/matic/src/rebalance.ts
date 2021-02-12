@@ -6,14 +6,14 @@ export const deposit = async (
   assetId: string,
   amountToBridge: string,
   routerAddress: string
-): Promise<{ depositTx: string }> => {
+): Promise<{ transaction: string }> => {
   console.log(`deposit: ${JSON.stringify({ assetId, amountToBridge, routerAddress })}`);
   const deposit = await maticPOSClient.depositERC20ForUser(assetId, routerAddress, amountToBridge, {
     from: routerAddress,
     encodeAbi: true,
   });
   console.log('deposit: ', deposit);
-  return { depositTx: deposit };
+  return { transaction: deposit };
 };
 
 export const approveForDeposit = async (
@@ -38,21 +38,25 @@ export const approveForDeposit = async (
       }
     );
     console.log('approveTx: ', approveTx);
-    return approveTx;
+    return { transaction: approveTx };
   } else {
     console.log(`Allowance is sufficient`);
-    return undefined;
+    return { allowance };
   }
 };
 
 export const checkDepositStatus = async (
   parentProvider: string,
   childProvider: string,
+  parentChainId: number,
+  childChainId: number,
   txHash: string
 ): Promise<any> => {
   console.log(`checkDepositStatus: ${JSON.stringify({ parentProvider, childProvider, txHash })}`);
   const parentEthProvider = new providers.JsonRpcProvider(parentProvider);
+  console.log('parentEthProvider: ', parentEthProvider);
   const childEthProvider = new providers.JsonRpcProvider(childProvider);
+  console.log('childEthProvider: ', childEthProvider);
   const childContract = new Contract(
     '0x0000000000000000000000000000000000001001',
     [
@@ -75,6 +79,7 @@ export const checkDepositStatus = async (
   );
 
   let tx = await parentEthProvider.getTransactionReceipt(txHash);
+  console.log('tx: ', tx);
   let childCounter = await childContract.lastStateId();
   console.log('childCounter: ', childCounter);
   let rootCounter = BigNumber.from(tx.logs[3].topics[1]);
