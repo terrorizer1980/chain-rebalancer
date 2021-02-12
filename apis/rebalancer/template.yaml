@@ -46,18 +46,22 @@ Resources:
             Path: /hello
             Method: get
 
-  RebalanceFunction:
+  MaticFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: main.default
-      CodeUri: functions/rebalance/dist
+      CodeUri: functions/matic/dist
       Layers:
         - !Ref GlobalDependenciesLayer
         - !Ref GlobalApiResponsesLayer
       Runtime: nodejs12.x
+      Environment:
+        Variables:
+          PARENT_PROVIDER: https://goerli.infura.io/v3/d1caeba320f94122ba8f791f50122c4c
+          MATIC_PROVIDER: https://rpc-mumbai.matic.today
       Events:
         Hello:
           Type: Api
           Properties:
-            Path: /rebalance
+            Path: /matic
             Method: post

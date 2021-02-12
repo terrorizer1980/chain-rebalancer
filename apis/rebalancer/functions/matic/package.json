@@ -1,5 +1,5 @@
 {
-  "name": "rebalance-function",
+  "name": "matic-function",
   "version": "1.0.0",
   "scripts": {
     "build:dev": "npm run clean && mkdir ./dist && cp package.json ./dist/package.json && webpack -w",
