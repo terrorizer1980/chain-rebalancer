@@ -1,4 +1,4 @@
-# Matic Rebalancer
+# Chain Rebalancer
 
 ## Local Dev
 
