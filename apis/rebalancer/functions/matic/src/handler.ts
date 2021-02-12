@@ -1,5 +1,4 @@
-import { TAddress, TBytes32, TIntegerString, TPublicIdentifier } from '@connext/vector-types';
-import { getSignerAddressFromPublicIdentifier } from '@connext/vector-utils';
+import { TAddress, TBytes32, TIntegerString } from '@connext/vector-types';
 import { MaticPOSClient } from '@maticnetwork/maticjs';
 import { Static, Type } from '@sinclair/typebox';
 import Ajv from 'ajv';
