@@ -1,5 +1,9 @@
 import { MaticPOSClient } from '@maticnetwork/maticjs';
-import { BigNumber, constants, Contract, providers, utils } from 'ethers';
+
+import { BigNumber } from '@ethersproject/bignumber';
+import { MaxUint256 } from '@ethersproject/constants';
+import { Contract } from '@ethersproject/contracts';
+import { JsonRpcProvider } from '@ethersproject/providers';
 
 export const deposit = async (
   maticPOSClient: MaticPOSClient,
@@ -29,14 +33,10 @@ export const approveForDeposit = async (
   console.log(`allowance for ${assetId}: ${allowance}, needed: ${amountToBridge}`);
   if (BigNumber.from(allowance).lt(amountToBridge)) {
     console.log(`Allowance is not sufficient, generating max approve tx`);
-    const approveTx = await maticPOSClient.approveERC20ForDeposit(
-      assetId,
-      constants.MaxUint256.toString(),
-      {
-        from: routerAddress,
-        encodeAbi: true,
-      }
-    );
+    const approveTx = await maticPOSClient.approveERC20ForDeposit(assetId, MaxUint256.toString(), {
+      from: routerAddress,
+      encodeAbi: true,
+    });
     console.log('approveTx: ', approveTx);
     return { transaction: approveTx };
   } else {
@@ -53,9 +53,9 @@ export const checkDepositStatus = async (
   txHash: string
 ): Promise<any> => {
   console.log(`checkDepositStatus: ${JSON.stringify({ parentProvider, childProvider, txHash })}`);
-  const parentEthProvider = new providers.JsonRpcProvider(parentProvider);
+  const parentEthProvider = new JsonRpcProvider(parentProvider);
   console.log('parentEthProvider: ', parentEthProvider);
-  const childEthProvider = new providers.JsonRpcProvider(childProvider);
+  const childEthProvider = new JsonRpcProvider(childProvider);
   console.log('childEthProvider: ', childEthProvider);
   const childContract = new Contract(
     '0x0000000000000000000000000000000000001001',
