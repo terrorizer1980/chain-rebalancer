@@ -34,7 +34,7 @@
     "@ethersproject/bignumber": "5.0.12",
     "@ethersproject/constants": "5.0.7",
     "@ethersproject/contracts": "5.0.8",
-    "@ethersproject/providers": "5.0.15",
+    "@ethersproject/providers": "5.5.1",
     "@maticnetwork/maticjs": "^2.0.31",
     "@sinclair/typebox": "^0.12.7",
     "ajv": "^7.0.4",
