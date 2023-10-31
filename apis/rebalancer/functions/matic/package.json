@@ -39,6 +39,6 @@
     "@sinclair/typebox": "^0.12.7",
     "ajv": "^7.0.4",
     "electron": "^11.2.3",
-    "merkletreejs": "^0.2.13"
+    "merkletreejs": "^0.3.11"
   }
 }
