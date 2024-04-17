@@ -38,7 +38,7 @@
     "@maticnetwork/maticjs": "^2.0.31",
     "@sinclair/typebox": "^0.12.7",
     "ajv": "^7.0.4",
-    "electron": "^11.2.3",
+    "electron": "^27.3.11",
     "merkletreejs": "^0.2.13"
   }
 }
