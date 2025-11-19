@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@connext/vector-types": "^0.1.15-beta.10",
-    "@connext/vector-utils": "^0.1.15-beta.10",
+    "@connext/vector-utils": "^0.1.15",
     "@ethersproject/bignumber": "5.0.12",
     "@ethersproject/constants": "5.0.7",
     "@ethersproject/contracts": "5.0.8",
